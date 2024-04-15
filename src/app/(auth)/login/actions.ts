@@ -1,19 +1,19 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { User } from "@supabase/supabase-js";
-import { unstable_noStore } from "next/cache";
 import { redirect } from "next/navigation";
 
-const supabase = createClient();
-
 export async function getUser() {
+  const supabase = createClient();
+
   const { data, error } = await supabase.auth.getUser();
   if (error) return null;
   return data.user;
 }
 
 export async function signInWithEmail(email: string) {
+  const supabase = createClient();
+
   const response = await supabase.auth.signInWithOtp({
     email,
   });
@@ -21,6 +21,8 @@ export async function signInWithEmail(email: string) {
 }
 
 export async function signInWithGithub() {
+  const supabase = createClient();
+
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "github",
     options: {
@@ -33,6 +35,8 @@ export async function signInWithGithub() {
 }
 
 export async function signOut() {
-  const response = await supabase.auth.signOut();
-  return JSON.parse(JSON.stringify(response));
+  const supabase = createClient();
+
+  await supabase.auth.signOut();
+  redirect("/login");
 }

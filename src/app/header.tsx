@@ -1,8 +1,7 @@
-import { createClient } from "@/lib/supabase/server";
-import { LogIn, SearchIcon, UserIcon } from "lucide-react";
+import { LogIn, SearchIcon } from "lucide-react";
 import Link from "next/link";
 import { getUser } from "./(auth)/login/actions";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import UserAvatar from "./avatar";
 
 export default async function Header() {
   const user: any = await getUser();
@@ -56,18 +55,10 @@ export default async function Header() {
         </li>
         <li className="ml-2 mr-6 relative">
           {user ? (
-            <Link href={`/${user.user_metadata.user_name}`}>
-              <Avatar className="flex justify-center items-center">
-                <AvatarImage
-                  src={user.user_metadata.avatar_url}
-                  alt={`/${user.user_metadata.user_name}`}
-                />
-                <AvatarFallback>
-                  <UserIcon />
-                </AvatarFallback>
-              </Avatar>
-            </Link>
+            // <Link href={`/${user.user_metadata.user_name}`}>
+            <UserAvatar user={user} />
           ) : (
+            // </Link>
             <Link href="/login">
               <button className="relative hidden md:inline-block px-4 py-2 text-xl text-black hover:text-white bg-white hover:bg-purple-600 drop-shadow-[6px_6px_0_black] hover:drop-shadow-[0_0_7px_rgba(168,85,247,0.5)] transition-all duration-300">
                 LOGIN

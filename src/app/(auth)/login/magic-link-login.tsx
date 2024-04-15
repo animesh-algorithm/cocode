@@ -33,12 +33,10 @@ export default function MagicLinkLoginForm() {
     z.infer<typeof MagicLinkLoginFormSchema>
   > = async (formData) => {
     const response = await signInWithEmail(formData.email.trim());
-    console.log(response);
     if (response.error) {
       form.reset();
       setSubmitError(response.error.code);
     }
-    console.log(response.data);
   };
   return (
     <Form {...form}>
