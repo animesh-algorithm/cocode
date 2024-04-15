@@ -1,7 +1,11 @@
-import { LogIn, SearchIcon } from "lucide-react";
+import { createClient } from "@/lib/supabase/server";
+import { LogIn, SearchIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
+import { getUser } from "./(auth)/login/actions";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export default function Header() {
+export default async function Header() {
+  const user: any = await getUser();
   return (
     <header className="flex justify-between container p-4 md:p-6">
       <Link
@@ -26,12 +30,14 @@ export default function Header() {
           </Link>
         </li>
         <li className="mx-2 md:mx-4 hover:scale-105 transition-transform">
-          <Link
-            href="/browse"
-            className=" text-xl font-bold leading-none text-gray2 gradient-slide"
-          >
-            my rooms
-          </Link>
+          {user && (
+            <Link
+              href="/browse"
+              className=" text-xl font-bold leading-none text-gray2 gradient-slide"
+            >
+              my rooms
+            </Link>
+          )}
         </li>
         <li className="ml-2">
           <button className="p-2 mr-2 hidden md:flex justify-between items-center bg-white bg-opacity-10 hover:bg-opacity-20 border border-gray4 hover:border-purple-500 shadow-xl hover:drop-shadow-sm transition-all rounded">
@@ -49,12 +55,28 @@ export default function Header() {
           </button>
         </li>
         <li className="ml-2 mr-6 relative">
-          <button className="relative hidden md:inline-block px-4 py-2 text-xl text-black hover:text-white bg-white hover:bg-purple-600 drop-shadow-[6px_6px_0_black] hover:drop-shadow-[0_0_7px_rgba(168,85,247,0.5)] transition-all duration-300">
-            LOGIN
-          </button>
-          <button className="flex md:hidden">
-            <LogIn />
-          </button>
+          {user ? (
+            <Link href={`/${user.user_metadata.user_name}`}>
+              <Avatar className="flex justify-center items-center">
+                <AvatarImage
+                  src={user.user_metadata.avatar_url}
+                  alt={`/${user.user_metadata.user_name}`}
+                />
+                <AvatarFallback>
+                  <UserIcon />
+                </AvatarFallback>
+              </Avatar>
+            </Link>
+          ) : (
+            <Link href="/login">
+              <button className="relative hidden md:inline-block px-4 py-2 text-xl text-black hover:text-white bg-white hover:bg-purple-600 drop-shadow-[6px_6px_0_black] hover:drop-shadow-[0_0_7px_rgba(168,85,247,0.5)] transition-all duration-300">
+                LOGIN
+              </button>
+              <button className="flex md:hidden">
+                <LogIn />
+              </button>
+            </Link>
+          )}
         </li>
       </ul>
     </header>
