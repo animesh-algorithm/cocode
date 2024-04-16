@@ -8,6 +8,15 @@ import { FcGoogle } from "react-icons/fc";
 export default function OauthLoginForm() {
   const supabase = createSupabaseBrowerClient();
 
+  const handleGoogleLogin = async () => {
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${location.origin}/auth/callback`,
+      },
+    });
+  };
+
   const handleGithubLogin = async () => {
     await supabase.auth.signInWithOAuth({
       provider: "github",
@@ -19,7 +28,7 @@ export default function OauthLoginForm() {
 
   return (
     <>
-      <Button className="w-full">
+      <Button className="w-full" onClick={handleGoogleLogin}>
         <FcGoogle className="mr-2 text-xl" />
         Log in With Google
       </Button>

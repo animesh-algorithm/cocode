@@ -19,7 +19,7 @@ export default function UserAvatar({ user }: { user: any }) {
     >
       <AvatarImage
         src={user.user_metadata.avatar_url}
-        alt={`/${user.user_metadata.user_name}`}
+        alt={`/${user.user_metadata.name}`}
       />
       <AvatarFallback>
         <UserIcon />

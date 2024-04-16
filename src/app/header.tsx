@@ -5,6 +5,7 @@ import UserAvatar from "./avatar";
 
 export default async function Header() {
   const user: any = await getUser();
+  console.log(user);
   return (
     <header className="flex justify-between container p-4 md:p-6">
       <Link
