@@ -68,7 +68,7 @@ export default function MagicLinkLoginForm() {
                         ? "border-blue-600"
                         : "border-green-600"
                     }
-                    } border-blue-600 font-sans focus:ring-none focus:outline-none p-2 w-[300px]`}
+                     border-blue-600 font-sans focus:ring-none focus:outline-none p-2 w-[300px]`}
                     {...field}
                   />
                 </FormControl>
