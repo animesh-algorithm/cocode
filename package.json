@@ -12,7 +12,7 @@
     "generate": "drizzle-kit generate:pg",
     "drop": "drizzle-kit drop",
     "check": "drizzle-kit check:pg",
-    "up": "drizzle-kit up:pg"
+    "up": "drizzle-kit up:pg" 
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -23,6 +23,7 @@
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
+    "@radix-ui/react-toast": "^1.1.5",
     "@supabase/ssr": "^0.3.0",
     "@supabase/supabase-js": "^2.42.4",
     "class-variance-authority": "^0.7.0",

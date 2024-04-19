@@ -7,7 +7,6 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { CountryList } from "@/lib/country";
@@ -30,15 +29,12 @@ import { Button } from "@/components/ui/button";
 import { ClipboardX, SquarePen } from "lucide-react";
 import Link from "next/link";
 import { editUserPersonalData } from "@/lib/supabase/queries";
+import { useToast } from "@/components/ui/use-toast";
 
 const PersonalProfileSchema = z.object({
-  name: z
-    .string()
-    .min(2, "Name is too short")
-    .max(50, "Name is too long")
-    .optional(),
+  name: z.string().min(2, "Name is too short").max(50, "Name is too long"),
   bio: z.string().max(300, "Bio is too long").optional(),
-  location: z.nativeEnum(CountryList).optional(),
+  // location: z.nativeEnum(CountryList).optional(),
   birthday: z
     .string()
     .optional()
@@ -55,13 +51,13 @@ const PersonalProfileSchema = z.object({
 
 export default function EditPersonalProfile({ user }: { user: any }) {
   const [submitError, setSubmitError] = useState<string>("");
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof PersonalProfileSchema>>({
-    mode: "onChange",
     resolver: zodResolver(PersonalProfileSchema),
     defaultValues: {
       name: user.name,
       bio: user.bio,
-      location: user.location,
+      // location: user.location || CountryList.India,
       birthday: user.birthday
         ? dayjs(user.birthday).format("YYYY-MM-DD")
         : dayjs("2000-01-01").format("YYYY-MM-DD"),
@@ -71,15 +67,26 @@ export default function EditPersonalProfile({ user }: { user: any }) {
   });
 
   const isLoading = form.formState.isSubmitting;
-  const submit: SubmitHandler<z.infer<typeof PersonalProfileSchema>> = async (
-    formData
-  ) => {
-    console.log(formData);
+  const submit = async (formData: z.infer<typeof PersonalProfileSchema>) => {
+    toast({
+      title: "Saving Changes.",
+      description: "Hold on while we save your changes.",
+    });
+
     const response = await editUserPersonalData({ ...formData, id: user.id });
     if (response.error) {
       form.reset();
       setSubmitError(response.error.code || "");
+      toast({
+        title: "An error occurred.",
+        description: "An error occurred while saving your changes.",
+      });
     }
+    toast({
+      title: "Changes saved successfully!",
+      description: "Your changes have been saved successfully.",
+    });
+    console.log(formData);
   };
 
   return (
@@ -87,12 +94,15 @@ export default function EditPersonalProfile({ user }: { user: any }) {
       <form
         className="container"
         onChange={() => {
+          console.log(form.formState.errors);
           if (submitError) setSubmitError("");
         }}
-        onSubmit={async (e) => {
-          e.preventDefault();
-          await submit(form.getValues());
-        }}
+        onSubmit={form.handleSubmit(submit)}
+        // onSubmit={async (e) => {
+        //   e.preventDefault();
+        //   await submit(form.getValues());
+        //   setSubmitError("Changes saved successfully!");
+        // }}
       >
         <div className="md:grid grid-cols-2 gap-4 sm:flex justify-center items-start">
           <div className="flex flex-col gap-4 justify-center items-center">
@@ -113,7 +123,9 @@ export default function EditPersonalProfile({ user }: { user: any }) {
                             ? "border-red-600"
                             : "border-green-600"
                         }
-                    } font-sans focus:ring-none focus:outline-none p-2 w-[300px]`}
+                    } font-sans focus:ring-none focus:outline-none p-2 w-[300px] ${
+                      isLoading ? "bg-gray7" : ""
+                    }`}
                         {...field}
                       />
                     </FormControl>
@@ -138,7 +150,9 @@ export default function EditPersonalProfile({ user }: { user: any }) {
                             form.formState.errors.birthday
                               ? "border-red-600"
                               : "border-green-600"
-                          } font-sans focus:ring-none focus:outline-none p-2 w-[300px]`}
+                          } font-sans focus:ring-none focus:outline-none p-2 w-[300px] ${
+                            isLoading ? "bg-gray7" : ""
+                          }`}
                           {...field}
                           value={dayjs(field.value).format("YYYY-MM-DD")}
                         />
@@ -167,7 +181,9 @@ export default function EditPersonalProfile({ user }: { user: any }) {
                             form.formState.errors.gender
                               ? "border-red-600"
                               : "border-green-600"
-                          } font-sans focus:ring-none focus:outline-none p-2 w-[300px]`}
+                          } font-sans focus:ring-none focus:outline-none p-2 w-[300px] ${
+                            isLoading ? "bg-gray7" : ""
+                          }`}
                         >
                           <SelectValue placeholder="Choose your gender" />
                         </SelectTrigger>
@@ -210,7 +226,9 @@ export default function EditPersonalProfile({ user }: { user: any }) {
                             ? "border-red-600"
                             : "border-green-600"
                         }
-                    } font-sans focus:ring-none focus:outline-none p-2 w-[300px]`}
+                    } font-sans focus:ring-none focus:outline-none p-2 w-[300px] ${
+                      isLoading ? "bg-gray7" : ""
+                    }`}
                         {...field}
                       />
                     </FormControl>
@@ -237,7 +255,9 @@ export default function EditPersonalProfile({ user }: { user: any }) {
                             form.formState.errors.pronouns
                               ? "border-red-600"
                               : "border-green-600"
-                          } font-sans focus:ring-none focus:outline-none p-2 w-[300px]`}
+                          } font-sans focus:ring-none focus:outline-none p-2 w-[300px] ${
+                            isLoading ? "bg-gray7" : ""
+                          }`}
                         >
                           <SelectValue placeholder="Preferred Pronouns" />
                         </SelectTrigger>
@@ -265,24 +285,23 @@ export default function EditPersonalProfile({ user }: { user: any }) {
             </div>
           </div>
         </div>
-        {submitError && <FormMessage>{submitError}</FormMessage>}
 
         <div className="flex md:justify-start p-1 justify-center items-start gap-2 mt-5">
           <Button
             className=" w-fit bg-green-500 hover:bg-green-600 text-gray-100 p-2 cursor-pointer"
             type="submit"
-            // disabled={isLoading}
+            disabled={isLoading}
           >
             <SquarePen className="mr-1" /> Make Changes
           </Button>
-          <Button
-            asChild
-            className=" w-fit bg-red-500 hover:bg-red-600 text-gray-100 p-2 cursor-pointer"
-          >
-            <Link href={`/${user.username}`}>
+          <Link href={`/${user.username}`}>
+            <Button
+              disabled={isLoading}
+              className=" w-fit bg-red-500 hover:bg-red-600 text-gray-100 p-2 cursor-pointer "
+            >
               <ClipboardX className="mr-1" /> Discard
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         </div>
       </form>
     </Form>

@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Providers } from "./providers";
 import Header from "./header";
+import { Toaster } from "@/components/ui/toaster";
 
 const font = localFont({
   src: "../../public/fonts/Cubano.ttf",
@@ -20,10 +21,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`dark:bg-gray8 ${font.className}`}>
+      <body className={`bg-gray8 ${font.className}`}>
         <Providers>
           <Header />
           {children}
+          <Toaster />
         </Providers>
       </body>
     </html>

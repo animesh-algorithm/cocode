@@ -1,4 +1,5 @@
-import { date, pgTable, text } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
+import { date, jsonb, pgTable, text, uuid } from "drizzle-orm/pg-core";
 
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
@@ -17,6 +18,22 @@ export const users = pgTable("user", {
   updated_at: date("updated_at").notNull().default("now()"),
   pronouns: text("pronouns"),
   gender: text("gender"),
+});
+
+export const room = pgTable("room", {
+  id: uuid("id")
+    .default(sql`gen_random_uuid()`)
+    .notNull()
+    .primaryKey(),
+  uid: text("uid")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  name: text("name").notNull(),
+  description: text("description"),
+  created_at: date("created_at").notNull().default("now()"),
+  updated_at: date("updated_at").notNull().default("now()"),
+  sourceCode: text("sourceCode"),
+  tags: jsonb("tags").default("[]"),
 });
 
 export type User = typeof users.$inferSelect;
