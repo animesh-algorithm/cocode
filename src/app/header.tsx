@@ -3,6 +3,13 @@ import Link from "next/link";
 import { getAuthenticatedUser } from "./(auth)/login/actions";
 import UserAvatar from "./avatar";
 import { getUserById } from "@/lib/supabase/data/users";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import Search from "./search";
 
 export default async function Header() {
   const user: any = await getAuthenticatedUser();
@@ -35,7 +42,7 @@ export default async function Header() {
         <li className="mx-2 md:mx-4 hover:scale-105 transition-transform">
           {user && (
             <Link
-              href="/browse"
+              href={`/${userData.username}/rooms`}
               className=" text-xl font-bold leading-none text-gray2 gradient-slide"
             >
               my rooms
@@ -43,16 +50,32 @@ export default async function Header() {
           )}
         </li>
         <li className="ml-2">
-          <button className="p-2 mr-2 hidden md:flex justify-between items-center bg-white bg-opacity-10 hover:bg-opacity-20 border border-gray4 hover:border-purple-500 shadow-xl hover:drop-shadow-sm transition-all rounded">
-            <span className="text-gray2 px-2">
-              <SearchIcon />
-            </span>
-            <span className="mr-12">search</span>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger className="hidden sm:flex">
+                <Search>
+                  <div className="p-2 mr-2 hidden md:flex justify-between items-center bg-white bg-opacity-10 hover:bg-opacity-20 border border-gray4 hover:border-purple-500 shadow-xl hover:drop-shadow-sm transition-all rounded">
+                    <span className="text-gray2 px-2">
+                      <SearchIcon />
+                    </span>
 
-            <span className="mx-2 text-xs border border-gray4 rounded-md p-1 px-2">
-              /
-            </span>
-          </button>
+                    <span className="mr-12">search</span>
+
+                    <span className="mx-2 text-xs border border-gray4 rounded-md p-1 px-2">
+                      /
+                    </span>
+                  </div>
+                </Search>
+              </TooltipTrigger>
+              <TooltipContent className="bg-gray5">
+                <p className="font-sans">
+                  Search rooms or filter by keywords such as typescript, nextjs
+                  etc.
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
           <button className="flex md:hidden">
             <SearchIcon />
           </button>

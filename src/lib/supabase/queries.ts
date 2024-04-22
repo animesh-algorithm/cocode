@@ -18,7 +18,6 @@ export const editUserPersonalData = async (updatedUser: Partial<User>) => {
       })
     );
   } catch (error) {
-    console.log(error);
     return JSON.parse(
       JSON.stringify({
         error: error,

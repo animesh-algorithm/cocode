@@ -86,7 +86,6 @@ export default function EditPersonalProfile({ user }: { user: any }) {
       title: "Changes saved successfully!",
       description: "Your changes have been saved successfully.",
     });
-    console.log(formData);
   };
 
   return (
@@ -94,15 +93,9 @@ export default function EditPersonalProfile({ user }: { user: any }) {
       <form
         className="container"
         onChange={() => {
-          console.log(form.formState.errors);
           if (submitError) setSubmitError("");
         }}
         onSubmit={form.handleSubmit(submit)}
-        // onSubmit={async (e) => {
-        //   e.preventDefault();
-        //   await submit(form.getValues());
-        //   setSubmitError("Changes saved successfully!");
-        // }}
       >
         <div className="md:grid grid-cols-2 gap-4 sm:flex justify-center items-start">
           <div className="flex flex-col gap-4 justify-center items-center">
