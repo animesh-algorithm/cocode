@@ -1,8 +1,8 @@
 import { getAuthenticatedUser } from "@/app/(auth)/login/actions";
 import { unstable_noStore } from "next/cache";
-import LoginInFirst from "../create/login-in-first";
+import LogInFirst from "@/components/shared/login-in-first";
 import { getRoom } from "@/lib/supabase/data/room";
-import RoomNotFound from "./room-not-found";
+import RoomNotFound from "@/components/shared/room-not-found";
 import VideoPlayer from "./video-player";
 import { getUserById } from "@/lib/supabase/data/users";
 
@@ -13,7 +13,7 @@ export default async function RoomPage(props: {
 }) {
   unstable_noStore();
   const user = await getAuthenticatedUser();
-  if (!user) return <LoginInFirst />;
+  if (!user) return <LogInFirst />;
 
   const room = await getRoom(props.params.roomId!);
   const userData = await getUserById(user.id);

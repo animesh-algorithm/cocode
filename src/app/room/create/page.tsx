@@ -1,12 +1,12 @@
 import { Form } from "@/components/ui/form";
 import CreateRoomForm from "./create-room-form";
 import { getAuthenticatedUser } from "@/app/(auth)/login/actions";
-import LoginInFirst from "./login-in-first";
+import LogInFirst from "@/components/shared/login-in-first";
 
 export default async function CreateRoomPage() {
   const user = await getAuthenticatedUser();
   if (!user) {
-    return <LoginInFirst />;
+    return <LogInFirst />;
   }
 
   return (

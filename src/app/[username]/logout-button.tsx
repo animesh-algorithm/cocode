@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import createSupabaseBrowerClient from "@/lib/supabase/client";
+import createSupabaseBrowerClient from "@/lib/supabase/config/client";
 import { useRouter } from "next/navigation";
 
 export default function LogoutButton() {

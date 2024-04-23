@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Providers } from "./providers";
-import Header from "./header";
+import Header from "../components/layout/header";
 import { Toaster } from "@/components/ui/toaster";
 
 const font = localFont({

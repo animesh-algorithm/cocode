@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/config/server";
 import { redirect } from "next/navigation";
 
 export async function getAuthenticatedUser() {
@@ -26,7 +26,7 @@ export async function signInWithGithub() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "github",
     options: {
-      redirectTo: `/auth/callback`,
+      redirectTo: `/oauth/callback`,
     },
   });
   if (data.url) {

@@ -28,8 +28,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { ClipboardX, SquarePen } from "lucide-react";
 import Link from "next/link";
-import { editUserPersonalData } from "@/lib/supabase/queries";
 import { useToast } from "@/components/ui/use-toast";
+import { editUserPersonalData } from "../actions";
 
 const PersonalProfileSchema = z.object({
   name: z.string().min(2, "Name is too short").max(50, "Name is too long"),
@@ -97,6 +97,7 @@ export default function EditPersonalProfile({ user }: { user: any }) {
         }}
         onSubmit={form.handleSubmit(submit)}
       >
+        {/* TODO: Add a edit username and avatar feature */}
         <div className="md:grid grid-cols-2 gap-4 sm:flex justify-center items-start">
           <div className="flex flex-col gap-4 justify-center items-center">
             <div className="flex flex-col gap-2">
@@ -278,7 +279,6 @@ export default function EditPersonalProfile({ user }: { user: any }) {
             </div>
           </div>
         </div>
-
         <div className="flex md:justify-start p-1 justify-center items-start gap-2 mt-5">
           <Button
             className=" w-fit bg-green-500 hover:bg-green-600 text-gray-100 p-2 cursor-pointer"

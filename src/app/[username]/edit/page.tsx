@@ -1,6 +1,6 @@
 import { getAuthenticatedUser } from "@/app/(auth)/login/actions";
 import { getUser, getUserById } from "@/lib/supabase/data/users";
-import UserNotFound from "../user-not-found";
+import UserNotFound from "@/components/shared/user-not-found";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import EditPersonalProfile from "./personal";
 
@@ -53,9 +53,7 @@ export default async function EditProfilePage(props: {
         <TabsContent className="mt-10" value="personal">
           <EditPersonalProfile user={user} />
         </TabsContent>
-        <TabsContent className="mt-10" value="work">
-          Change your password here.
-        </TabsContent>
+        <TabsContent className="mt-10" value="work"></TabsContent>
       </Tabs>
     </div>
   );

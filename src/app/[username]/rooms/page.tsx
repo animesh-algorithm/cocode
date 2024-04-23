@@ -13,7 +13,7 @@ import { Plus, SquareCode, SquarePen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { getUser } from "@/lib/supabase/data/users";
-import LoginInFirst from "@/app/room/create/login-in-first";
+import LogInFirst from "@/components/shared/login-in-first";
 
 export default async function MyRoomsPage(props: {
   params: {
@@ -23,7 +23,7 @@ export default async function MyRoomsPage(props: {
   const { username } = props.params;
   const currentUser = await getAuthenticatedUser();
   if (!currentUser) {
-    return <LoginInFirst />;
+    return <LogInFirst />;
   }
 
   const user = await getUser(username);

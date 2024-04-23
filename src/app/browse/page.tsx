@@ -17,6 +17,7 @@ import { redirect } from "next/navigation";
 export default async function BrowsePage() {
   const rooms = await getRooms(undefined);
   const user = await getAuthenticatedUser();
+
   return (
     <div className="container mt-20 mb-20 relative">
       <header className="text-center inset-0 mb-8">
@@ -32,7 +33,7 @@ export default async function BrowsePage() {
       )}
 
       <div className="mx-auto w-24 h-1 my-12 bg-gradient-to-r from-gray5 to-gray4 rounded-full"></div>
-
+      {/* TODO: Common Component for Browse and my-room page */}
       <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 md:gap-5 gap-4 justify-items-center">
         {rooms.map((room) => (
           <Card

@@ -1,7 +1,7 @@
 import { LogIn, SearchIcon } from "lucide-react";
 import Link from "next/link";
-import { getAuthenticatedUser } from "./(auth)/login/actions";
-import UserAvatar from "./avatar";
+import { getAuthenticatedUser } from "../../app/(auth)/login/actions";
+import UserAvatar from "../shared/avatar";
 import { getUserById } from "@/lib/supabase/data/users";
 import {
   Tooltip,
@@ -9,7 +9,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import Search from "./search";
+import Search from "../modals/search";
 
 export default async function Header() {
   const user: any = await getAuthenticatedUser();

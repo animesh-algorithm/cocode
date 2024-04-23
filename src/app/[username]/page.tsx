@@ -18,7 +18,7 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import LogoutButton from "./logout-button";
 import dayjs from "dayjs";
-import UserNotFound from "./user-not-found";
+import UserNotFound from "@/components/shared/user-not-found";
 
 export default async function ProfilePage(props: {
   params: {
@@ -52,6 +52,7 @@ export default async function ProfilePage(props: {
           <Button className="my-4">Follow</Button>
           {isSameUser && <LogoutButton />}
         </div>
+        {/* TODO: Change "This user has" to "You have" incase of same user */}
         <p className="">{user.bio || "This user has not set a bio yet."}</p>
         <div className="flex-wrap gap-4 mt-5 flex justify-center items-center text-muted-foreground font-sans">
           <div className="flex gap-1">

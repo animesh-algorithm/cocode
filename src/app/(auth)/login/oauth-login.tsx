@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import createSupabaseBrowerClient from "@/lib/supabase/client";
+import createSupabaseBrowerClient from "@/lib/supabase/config/client";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
@@ -12,7 +12,7 @@ export default function OauthLoginForm() {
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${location.origin}/auth/callback`,
+        redirectTo: `${location.origin}/oauth/callback`,
       },
     });
   };
@@ -21,7 +21,7 @@ export default function OauthLoginForm() {
     await supabase.auth.signInWithOAuth({
       provider: "github",
       options: {
-        redirectTo: `${location.origin}/auth/callback`,
+        redirectTo: `${location.origin}/oauth/callback`,
       },
     });
   };

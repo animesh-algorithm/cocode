@@ -1,4 +1,4 @@
-export default function LoginInFirst() {
+export default function LogInFirst() {
   return (
     <div className="md:mt-20 mt-10 container relative">
       <div className="flex justify-center items-center flex-col">
