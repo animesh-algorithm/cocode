@@ -12,6 +12,7 @@ import { Plus, SquareCode, SquarePen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { getAuthenticatedUser } from "../(auth)/login/actions";
+import { redirect } from "next/navigation";
 
 export default async function BrowsePage() {
   const rooms = await getRooms(undefined);
@@ -51,7 +52,12 @@ export default async function BrowsePage() {
               )}
             </CardImage>
             <CardHeader className="flex flex-row justify-between">
-              <CardTitle className="text-lg">{room.name}</CardTitle>
+              <Link
+                href={`/room/${room.id}`}
+                className="hover:underline gradient-slide"
+              >
+                <CardTitle className="text-lg">{room.name}</CardTitle>
+              </Link>
               <Link href={room.sourceCode || "#"}>
                 <SquareCode />
               </Link>

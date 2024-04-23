@@ -18,3 +18,9 @@ export const getUserRooms = async (uid: string) => {
   });
   return rooms;
 };
+
+export const getRoom = async (rid: string) => {
+  return await db.query.room.findFirst({
+    where: eq(room.id, rid),
+  });
+};
