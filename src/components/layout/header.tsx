@@ -39,7 +39,7 @@ export default async function Header() {
             explore
           </Link>
         </li>
-        <li className="mx-2 md:mx-4 hover:scale-105 transition-transform">
+        {/* <li className="mx-2 md:mx-4 hover:scale-105 transition-transform">
           {user && (
             <Link
               href={`/${userData.username}/rooms`}
@@ -48,7 +48,7 @@ export default async function Header() {
               my rooms
             </Link>
           )}
-        </li>
+        </li> */}
         <li className="ml-2">
           <TooltipProvider>
             <Tooltip>
