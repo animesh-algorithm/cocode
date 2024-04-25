@@ -10,6 +10,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Search from "../modals/search";
+import AvatarDropdown from "../shared/avatar-dropdown";
 
 export default async function Header() {
   const user: any = await getAuthenticatedUser();
@@ -82,9 +83,7 @@ export default async function Header() {
         </li>
         <li className="ml-2 mr-6 relative">
           {user ? (
-            <Link href={`/${userData.username}`}>
-              <UserAvatar user={user} />
-            </Link>
+            <AvatarDropdown user={user} />
           ) : (
             <Link href="/login">
               <button className="relative hidden md:inline-block px-4 py-2 text-xl text-black hover:text-white bg-white hover:bg-purple-600 drop-shadow-[6px_6px_0_black] hover:drop-shadow-[0_0_7px_rgba(168,85,247,0.5)] transition-all duration-300">

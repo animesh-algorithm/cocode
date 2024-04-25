@@ -39,16 +39,17 @@ export default async function ProfilePage(props: {
   return (
     <div className="md:mt-20 mt-10 container relative">
       <div className="flex justify-center items-center flex-col">
-        <Avatar className="flex justify-center items-center w-[100px] h-[100px]">
+        <Avatar className="flex justify-center items-center w-[100px] h-[100px] rounded-md">
           <AvatarImage src={user.avatar!} alt={user.name} />
-          <AvatarFallback className="w-[100px] h-[100px] bg-red-500 hover:bg-red-600">
+          <AvatarFallback className="w-[100px] h-[100px] bg-red-500 hover:bg-red-600 rounded-md">
             <UserIcon width={50} height={50} />
           </AvatarFallback>
         </Avatar>
         <h2 className="text-4xl mt-6">{user.name}</h2>
         <p className="font-sans mt-1">@{user.username}</p>
         <div className="flex gap-3">
-          <Button className="my-4">Follow</Button>
+          {!isSameUser && <Button className="my-4">Follow</Button>}
+
           {isSameUser && <LogoutButton />}
         </div>
         <p>
