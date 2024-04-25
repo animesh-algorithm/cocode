@@ -25,6 +25,7 @@ export default function RootLayout({
         <Providers>
           <Header />
           {children}
+          <div className="bottom-0 top-[55%] fixed bg-gradient-to-t dark:from-gray-800 left-0 right-0 -z-10"></div>
           <Toaster />
         </Providers>
       </body>
