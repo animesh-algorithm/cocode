@@ -66,15 +66,19 @@ export default async function RoomPage(props: {
                 </div>
               ))}
           </div>
-          <Button
-            variant="outline"
-            asChild
-            className="bg-transparent font-sans overflow-hidden flex justify-start pl-1 w-fit"
-          >
-            <Link href={room.sourceCode!} target="_blank">
-              <Github className="mr-1" /> @{room.sourceCode?.split(".com/")[1]}
-            </Link>
-          </Button>
+          {room.sourceCode && (
+            <Button
+              variant="outline"
+              asChild
+              className="bg-transparent font-sans overflow-hidden flex justify-start pl-1 w-fit"
+            >
+              <Link href={room.sourceCode} target="_blank">
+                <Github className="mr-1" /> @
+                {room.sourceCode?.split(".com/")[1]}
+              </Link>
+            </Button>
+          )}
+
           <p className="w-full text-justify font-sans text-muted-foreground ">
             {room.description}
           </p>
@@ -134,9 +138,15 @@ export default async function RoomPage(props: {
           <h2 className="text-2xl bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent">
             About the author
           </h2>
-          <h2 className="text-2xl flex gap-1">
-            {author?.name}{" "}
-            <ArrowUpRight className="hover:text-orange-500 text-orange-400" />
+          <h2>
+            <Link
+              href={`/${author?.username}`}
+              target="_blank"
+              className="text-2xl flex gap-1"
+            >
+              {author?.name}
+              <ArrowUpRight className="hover:text-orange-500 text-orange-400" />
+            </Link>
           </h2>
           <p className="font-sans text-sm">
             @{author?.username} •{" "}
