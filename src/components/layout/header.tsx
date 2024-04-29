@@ -18,7 +18,7 @@ export default async function Header() {
   if (user) userData = await getUserById(user.id);
 
   return (
-    <header className="flex justify-between container p-4 md:p-6">
+    <header className="flex justify-between container p-6 md:p-8">
       <Link
         href="/"
         className="flex justify-center items-center text-center"
@@ -81,7 +81,7 @@ export default async function Header() {
             <SearchIcon />
           </button>
         </li>
-        <li className="ml-2 mr-6 relative">
+        <li className="ml-2 md:mr-6 relative">
           {user ? (
             <AvatarDropdown user={user} />
           ) : (
