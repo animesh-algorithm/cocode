@@ -12,10 +12,7 @@ export default function UserAvatar({
     <Avatar
       className={`flex justify-center items-center cursor-pointer rounded-md ${className}`}
     >
-      <AvatarImage
-        src={user.user_metadata.avatar_url}
-        alt={`/${user.user_metadata.name}`}
-      />
+      <AvatarImage src={user.avatar} alt={`/${user.name}`} />
       <AvatarFallback className="bg-red-500 hover:bg-red-600 rounded-md">
         <UserIcon />
       </AvatarFallback>

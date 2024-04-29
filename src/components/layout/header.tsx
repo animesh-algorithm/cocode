@@ -82,8 +82,8 @@ export default async function Header() {
           </button>
         </li>
         <li className="ml-2 md:mr-6 relative">
-          {user ? (
-            <AvatarDropdown user={user} />
+          {userData ? (
+            <AvatarDropdown user={userData} />
           ) : (
             <Link href="/login">
               <button className="relative hidden md:inline-block px-4 py-2 text-xl text-black hover:text-white bg-white hover:bg-purple-600 drop-shadow-[6px_6px_0_black] hover:drop-shadow-[0_0_7px_rgba(168,85,247,0.5)] transition-all duration-300">
