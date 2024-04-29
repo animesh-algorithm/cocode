@@ -7,36 +7,42 @@ import {
   DropdownMenuSeparator,
 } from "../ui/dropdown-menu";
 import dayjs from "dayjs";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, LogOut, Tv } from "lucide-react";
 import Link from "next/link";
+import LogoutButton from "@/app/[username]/logout-button";
 
 export default async function NavDrawer({ user }: { user: any }) {
   const userData: any = await getUserById(user.id);
   return (
     <>
       <DropdownMenuLabel>
-        <UserAvatar user={user} className="w-[100px] h-[100px]" />
+        <UserAvatar
+          user={user}
+          className="w-[100px] h-[100px] cursor-emoji-[👌]"
+        />
       </DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuGroup>
-        <DropdownMenuItem className="flex flex-col justify-start items-start mb-2">
-          <h2 className="text-2xl flex gap-1">
-            {userData.name}{" "}
-            <Link href={`/${userData.username}`}>
+        <Link href={`/${userData.username}`}>
+          <DropdownMenuItem className="flex flex-col justify-start items-start mb-2 cursor-pointer">
+            <h2 className="text-2xl flex gap-1">
+              {userData.name}{" "}
               <ArrowUpRight className="hover:text-orange-500 text-orange-400" />
-            </Link>
-          </h2>
-          <p className="font-sans">
-            @{userData.username} •{" "}
-            <span className="text-muted-foreground">
-              Joined {dayjs(userData.created_at).format("MMMM YYYY")}
-            </span>
-          </p>
+            </h2>
+            <p className="font-sans">
+              @{userData.username} •{" "}
+              <span className="text-muted-foreground">
+                Joined {dayjs(userData.created_at).format("MMMM YYYY")}
+              </span>
+            </p>
+          </DropdownMenuItem>
+        </Link>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="flex gap-2 mb-2 cursor-pointer">
+          <Tv /> <div className="text-md gradient-slide">My Rooms</div>
         </DropdownMenuItem>
-        <DropdownMenuItem className="flex  mb-2">
-          <p>
-            10 <span className="font-sans"> Followers</span>
-          </p>
+        <DropdownMenuItem className="flex gap-2 mb-2 cursor-pointer">
+          <LogoutButton />
         </DropdownMenuItem>
       </DropdownMenuGroup>
     </>

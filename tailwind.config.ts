@@ -94,7 +94,10 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwind-plugin-cursor-emoji"),
+    require("tailwindcss-animate"),
+  ],
 } satisfies Config;
 
 export default config;

@@ -49,8 +49,6 @@ export default async function ProfilePage(props: {
         <p className="font-sans mt-1">@{user.username}</p>
         <div className="flex gap-3">
           {!isSameUser && <Button className="my-4">Follow</Button>}
-
-          {isSameUser && <LogoutButton />}
         </div>
         <p>
           {user.bio ||
