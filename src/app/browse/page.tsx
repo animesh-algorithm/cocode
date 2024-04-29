@@ -54,7 +54,7 @@ export default async function BrowsePage() {
             </CardImage>
             <CardHeader className="flex flex-row justify-between">
               <Link
-                href={`/room/${room.id}`}
+                href={`/room/${room.id}#room`}
                 className="hover:underline gradient-slide"
               >
                 <CardTitle className="text-lg">{room.name}</CardTitle>
