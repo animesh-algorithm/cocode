@@ -47,15 +47,15 @@ export default async function ProfilePage(props: {
         </Avatar>
         <h2 className="text-4xl mt-6">{user.name}</h2>
         <p className="font-sans mt-1">@{user.username}</p>
-        <div className="flex gap-3">
+        <div className="flex">
           {!isSameUser && <Button className="my-4">Follow</Button>}
         </div>
-        <p>
+        <p className="my-5">
           {user.bio ||
             (isSameUser ? "You have " : "This user has ") +
               "not added a bio yet."}
         </p>
-        <div className="flex-wrap gap-4 mt-5 flex justify-center items-center text-muted-foreground font-sans">
+        <div className="flex-wrap gap-4 flex justify-center items-center text-muted-foreground font-sans">
           <div className="flex gap-1">
             <MapPin /> IN
           </div>
