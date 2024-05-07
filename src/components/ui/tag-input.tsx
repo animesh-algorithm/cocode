@@ -248,7 +248,7 @@ const TagInput = React.forwardRef<HTMLInputElement, TagInputProps>(
             : "flex-row"
         }`}
       >
-        {!usePopoverForTags ? (
+        {!usePopoverForTags && tags.length > 0 ? (
           <TagList
             tags={truncatedTags}
             customTagRenderer={customTagRenderer}

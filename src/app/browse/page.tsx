@@ -13,6 +13,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getAuthenticatedUser } from "../(auth)/login/actions";
 import { redirect } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 export default async function BrowsePage() {
   const rooms = await getRooms(undefined);
@@ -26,9 +27,15 @@ export default async function BrowsePage() {
       </header>
       {user && (
         <div className="absolute right-10 top-2">
-          <Link href="/room/create#create">
-            <Plus />
-          </Link>
+          <Button
+            variant="ghost"
+            className="hover:bg-green-600 rounded-full"
+            asChild
+          >
+            <Link href="/room/create#create">
+              <Plus />
+            </Link>
+          </Button>
         </div>
       )}
 
