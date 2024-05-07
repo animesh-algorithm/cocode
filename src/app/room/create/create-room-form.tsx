@@ -18,7 +18,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { createRoomAction } from "../actions";
+import { createRoomAction, updateRoomAction } from "../actions";
+import { Room } from "@/lib/supabase/schema";
+import createSupabaseBrowerClient from "@/lib/supabase/config/client";
 
 const CreateRoomSchema = z.object({
   name: z.string().min(3, "Name is too short").max(255, "Name is too long"),
@@ -36,9 +38,11 @@ const CreateRoomSchema = z.object({
       })
     )
     .optional(),
+  thumbnail: z.any().optional(),
 });
 
 export default function CreateRoomForm() {
+  const supabase = createSupabaseBrowerClient();
   const [submitError, setSubmitError] = useState<string>("");
   const [tags, setTags] = useState<Tag[]>([]);
 
@@ -51,12 +55,34 @@ export default function CreateRoomForm() {
       description: "",
       sourceCode: "",
       tags: [],
+      thumbnail: "",
     },
   });
-  const { setValue } = form;
+  const { setValue, register } = form;
+
+  const uploadThumbnail = async (room: Room, file: any) => {
+    const { data, error } = await supabase.storage
+      .from("thumbnails")
+      .upload(`thumbnail-${room.id}`, file, {
+        cacheControl: "3600",
+        upsert: true,
+      });
+    if (error) {
+      setSubmitError(error.message);
+      return;
+    }
+
+    const response = await supabase.storage
+      .from("thumbnails")
+      .createSignedUrl(data.path, 3.156e7);
+    return response.data?.signedUrl;
+  };
 
   const submit = async (formData: z.infer<typeof CreateRoomSchema>) => {
-    const response = await createRoomAction(formData);
+    const response = await createRoomAction({
+      ...formData,
+      thumbnail: "/room.png",
+    });
     if (response.error) {
       setSubmitError(response.error.message);
       toast({
@@ -65,6 +91,19 @@ export default function CreateRoomForm() {
           "An error occurred while creating your room. Please contact support.",
       });
       return;
+    }
+    console.log(formData.thumbnail);
+    if (formData.thumbnail !== "") {
+      const thumbnailURL = await uploadThumbnail(
+        response.data[0],
+        formData.thumbnail[0]
+      );
+      if (thumbnailURL) {
+        await updateRoomAction({
+          ...response.data[0],
+          thumbnail: thumbnailURL,
+        });
+      }
     }
     toast({
       title: "Room created.",
@@ -202,6 +241,33 @@ export default function CreateRoomForm() {
                         setTags(newTags);
                         setValue("tags", newTags as [Tag, ...Tag[]]);
                       }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="sourceCode">Thumbnail</Label>
+            <FormField
+              control={form.control}
+              disabled={isLoading}
+              name="thumbnail"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <input
+                      type="file"
+                      className={`bg-gray6 rounded-none border-0 border-b-4 ${
+                        form.formState.errors.thumbnail
+                          ? "border-red-600"
+                          : "border-green-600"
+                      }
+                    } font-sans focus:ring-none focus:outline-none p-2 w-full ${
+                      isLoading ? "bg-gray7" : ""
+                    }`}
+                      {...register("thumbnail")}
                     />
                   </FormControl>
                   <FormMessage />

@@ -6,13 +6,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { getRooms } from "@/lib/supabase/data/room";
-import { Room } from "@/lib/supabase/schema";
-import dayjs from "dayjs";
 import { Plus, SquareCode, SquarePen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { getAuthenticatedUser } from "../(auth)/login/actions";
-import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
 export default async function BrowsePage() {
@@ -49,7 +46,7 @@ export default async function BrowsePage() {
           >
             <CardImage className="rounded-t-lg relative">
               <Image
-                src={`/room.png`}
+                src={room.thumbnail!}
                 className="rounded-t-lg aspect-video"
                 alt={room.name}
                 width={1920}

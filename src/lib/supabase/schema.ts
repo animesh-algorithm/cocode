@@ -34,6 +34,7 @@ export const room = pgTable("room", {
   updated_at: date("updated_at").notNull().default("now()"),
   sourceCode: text("sourceCode"),
   tags: jsonb("tags").default("[]"),
+  thumbnail: text("thumbnail").default("/room.png"),
 });
 
 export type User = typeof users.$inferSelect;
