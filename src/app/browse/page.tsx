@@ -53,7 +53,14 @@ export default async function BrowsePage() {
                 height={1080}
               />
               {user && user.id === room.uid && (
-                <SquarePen className="absolute top-2 right-2" />
+                <Button
+                  asChild
+                  className="absolute top-2 right-2 text-black hover:text-white hover:bg-purple-600 drop-shadow-[6px_6px_0_black] hover:drop-shadow-[0_0_7px_rgba(168,85,247,0.5)] transition-all duration-300"
+                >
+                  <Link href={`/room/${room.id}/edit`}>
+                    <SquarePen />
+                  </Link>
+                </Button>
               )}
             </CardImage>
             <CardHeader className="flex flex-row justify-between">
